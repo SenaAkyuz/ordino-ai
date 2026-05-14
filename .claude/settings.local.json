@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(taskkill //F //IM node.exe)",
+      "Bash(npm run *)",
+      "Bash(cp \"/c/Users/Monster/Downloads/Brand_Logos/WebP/google_Ads.webp\" public/brand-logos/WebP/)",
+      "Bash(cp \"/c/Users/Monster/Downloads/Brand_Logos/WebP/googleSearch.webp\" public/brand-logos/WebP/)",
+      "Bash(curl -s -o /dev/null -w \"HTTP %{http_code}\\\\n\" http://localhost:3000/)",
+      "Read(//c/Users/Monster/AppData/Local/Temp/claude/C--Users-Monster-Documents-ordino-ai/abb57d65-79e5-43ef-b465-a7f1b9ca5dce/tasks/**)"
+    ]
+  }
+}
