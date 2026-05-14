@@ -5,7 +5,7 @@ export function TrustBar() {
     <section className="border-y border-line-light bg-bg py-14 md:py-16">
       <div className="container-page">
         <p className="text-center text-caption font-medium text-ink-50 uppercase tracking-[0.12em] mb-10">
-          Built for industries where one lead is worth millions.
+          Built by operators trusted by:
         </p>
 
         <div className="relative overflow-hidden mask-fade-x">

@@ -12,7 +12,7 @@ export function Hero() {
         {/* Hero text — centered */}
         <div className="mx-auto max-w-[760px] text-center">
           <Pill className="mb-8">
-            Now live in London · Backed by independent operators
+            Live in London · £300K+ in annual media spend already running through Ordino
           </Pill>
 
           <h1 className="text-display-xl text-ink text-balance">

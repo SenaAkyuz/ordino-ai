@@ -8,6 +8,9 @@ import { Integrations } from '@/components/home/Integrations'
 import { Security } from '@/components/home/Security'
 import { PricingTeaser } from '@/components/home/PricingTeaser'
 import { FinalCTA } from '@/components/home/FinalCTA'
+import { LiveInProduction } from '@/components/home/LiveInProduction'
+import { WhyNow } from '@/components/home/WhyNow'
+import { BeforeAfter } from '@/components/home/BeforeAfter'
 
 const organizationJsonLd = {
   '@context': 'https://schema.org',
@@ -54,8 +57,11 @@ export default function HomePage() {
       <Hero />
       <TrustBar />
       <HowItWorks />
+      <LiveInProduction />
       <Capabilities />
+      <BeforeAfter />
       <Industries />
+      <WhyNow />
       <WhyOrdino />
       <Integrations />
       <Security />

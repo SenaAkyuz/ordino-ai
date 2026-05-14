@@ -35,6 +35,70 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Operator Credentials — built by operators */}
+      <section className="section-tight border-t border-line-light">
+        <div className="container-page">
+          <div className="max-w-[900px] mx-auto">
+            {/* Title */}
+            <div className="text-center mb-12">
+              <h2 className="text-display-md text-ink mb-6 text-balance">
+                Built by operators, not by a pitch deck.
+              </h2>
+              <p className="text-body-lg text-ink-70 text-pretty max-w-[640px] mx-auto">
+                12+ years running millions in media spend taught us one thing: marketing tools are fragmented. So we built the system we always needed.
+              </p>
+            </div>
+
+            {/* 3 metric cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5 mb-12">
+              <CredentialMetric
+                value="12+"
+                unit="years"
+                label="running enterprise media operations"
+              />
+              <CredentialMetric
+                value="£XM+"
+                label="in paid media managed across global brands"
+              />
+              <CredentialMetric
+                value="50+"
+                unit="brands"
+                label="and growth teams worked with directly"
+              />
+            </div>
+
+            {/* Trusted by teams from */}
+            <div className="rounded-xl border border-line bg-bg-card p-6 md:p-8">
+              <p className="text-eyebrow uppercase text-ink-50 mb-5 text-center">
+                Trusted by teams from:
+              </p>
+              <div className="flex flex-wrap justify-center gap-x-6 gap-y-3">
+                {[
+                  'TURKISH TECHNIC',
+                  'ANADOLU HOLDING',
+                  'AIATA',
+                  'GSSTORE',
+                  'KOÇ GROUP',
+                  'ARÇELİK',
+                  'BEKO',
+                  'PHILIPS',
+                  'GENERALI',
+                  'MARIE CLAIRE',
+                  'FORTUNE',
+                ].map(name => (
+                  <span
+                    key={name}
+                    className="font-display font-bold text-caption tracking-[0.18em] text-ink-50 whitespace-nowrap"
+                  >
+                    {name}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Built in London — real address */}
       <section className="section-tight border-t border-line-light bg-bg-soft/40">
         <div className="container-page">
@@ -102,6 +166,34 @@ export default function AboutPage() {
       {/* Final CTA */}
       <FinalCTA />
     </>
+  )
+}
+
+function CredentialMetric({
+  value,
+  unit,
+  label,
+}: {
+  value: string
+  unit?: string
+  label: string
+}) {
+  return (
+    <div className="card p-6 text-center">
+      <div className="flex items-baseline justify-center gap-2 mb-3">
+        <span className="font-display font-bold text-display-lg text-ink tabular leading-none">
+          {value}
+        </span>
+        {unit && (
+          <span className="font-display font-semibold text-body-lg text-ink-50">
+            {unit}
+          </span>
+        )}
+      </div>
+      <p className="text-body-sm text-ink-50 text-pretty">
+        {label}
+      </p>
+    </div>
   )
 }
 
