@@ -16,7 +16,8 @@ const withItems = [
 
 export function BeforeAfter() {
   return (
-    <section className="section relative">
+    <section className="section relative overflow-hidden">
+      <div className="absolute inset-0 -z-10 gradient-peach opacity-30" aria-hidden="true" />
       <div className="container-page">
         {/* Header */}
         <div className="mx-auto max-w-[720px] text-center mb-14 md:mb-16">
@@ -47,20 +48,20 @@ export function BeforeAfter() {
           </div>
 
           {/* WITH */}
-          <div className="card p-7 md:p-9 border-line-strong shadow-soft">
-            <div className="flex items-center gap-2.5 mb-7 pb-5 border-b border-line">
-              <span className="inline-flex h-2 w-2 rounded-full bg-success-bg ring-4 ring-success-bg/40">
+          <div className="rounded-xl p-7 md:p-9 bg-accent text-accent-ink shadow-card">
+            <div className="flex items-center gap-2.5 mb-7 pb-5 border-b border-white/10">
+              <span className="inline-flex h-2 w-2 rounded-full bg-success-bg ring-4 ring-success-bg/20">
                 <span className="inline-flex h-2 w-2 rounded-full bg-success animate-pulse" />
               </span>
-              <span className="text-caption font-bold uppercase tracking-[0.16em] text-ink">
+              <span className="text-caption font-bold uppercase tracking-[0.16em] text-accent-ink">
                 With Ordino
               </span>
             </div>
             <ul className="space-y-4">
               {withItems.map(item => (
                 <li key={item} className="flex items-start gap-3">
-                  <CheckIcon />
-                  <span className="text-body-lg text-ink">{item}</span>
+                  <CheckIconLight />
+                  <span className="text-body-lg text-accent-ink">{item}</span>
                 </li>
               ))}
             </ul>
@@ -79,9 +80,9 @@ function CrossIcon() {
   )
 }
 
-function CheckIcon() {
+function CheckIconLight() {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-accent flex-shrink-0 mt-1" aria-hidden="true">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-success-bg flex-shrink-0 mt-1" aria-hidden="true">
       <path d="M20 6L9 17l-5-5" />
     </svg>
   )

@@ -121,11 +121,21 @@ function IndustrySection({
   industry: (typeof industries)[number]
   index: number
 }) {
+  const palettes = ['gradient-mint', 'gradient-lavender', 'gradient-peach'] as const
+  const gradient =
+    index % 2 === 0 ? palettes[Math.floor(index / 2) % palettes.length] : null
+
   return (
     <section
       id={industry.id}
-      className={`section-tight ${index % 2 === 0 ? 'bg-bg' : 'bg-bg-soft/40'} border-t border-line-light scroll-mt-24`}
+      className={`section-tight ${index % 2 === 0 ? 'bg-bg' : 'bg-bg-soft/40'} border-t border-line-light scroll-mt-24 relative overflow-hidden`}
     >
+      {gradient && (
+        <div
+          className={`absolute inset-0 -z-10 ${gradient} opacity-25`}
+          aria-hidden="true"
+        />
+      )}
       <div className="container-page">
         <div className="grid lg:grid-cols-[1fr_1.1fr] gap-10 lg:gap-16 max-w-[1100px] mx-auto">
           {/* Left: title + KPIs */}

@@ -25,7 +25,8 @@ export default function AboutPage() {
       </section>
 
       {/* Manifesto — 1 paragraph covering why Ordino, why now, why London */}
-      <section className="section-tight border-t border-line-light">
+      <section className="section-tight border-t border-line-light relative overflow-hidden">
+        <div className="absolute inset-0 -z-10 gradient-peach opacity-20" aria-hidden="true" />
         <div className="container-page">
           <div className="max-w-[760px] mx-auto">
             <p className="text-display-sm text-ink-70 text-pretty leading-relaxed">
@@ -36,7 +37,8 @@ export default function AboutPage() {
       </section>
 
       {/* Operator Credentials — built by operators */}
-      <section className="section-tight border-t border-line-light">
+      <section className="section-tight border-t border-line-light relative overflow-hidden">
+        <div className="absolute inset-0 -z-10 gradient-mint opacity-30" aria-hidden="true" />
         <div className="container-page">
           <div className="max-w-[900px] mx-auto">
             {/* Title */}
@@ -100,7 +102,8 @@ export default function AboutPage() {
       </section>
 
       {/* Built in London — real address */}
-      <section className="section-tight border-t border-line-light bg-bg-soft/40">
+      <section className="section-tight border-t border-line-light bg-bg-soft/40 relative overflow-hidden">
+        <div className="absolute inset-0 -z-10 gradient-peach opacity-25" aria-hidden="true" />
         <div className="container-page">
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center max-w-[1100px] mx-auto">
             {/* Address */}
@@ -136,7 +139,8 @@ export default function AboutPage() {
       </section>
 
       {/* Investors / Advisors */}
-      <section className="section-tight border-t border-line-light">
+      <section className="section-tight border-t border-line-light relative overflow-hidden">
+        <div className="absolute inset-0 -z-10 gradient-lavender opacity-25" aria-hidden="true" />
         <div className="container-page">
           <div className="max-w-[1100px] mx-auto text-center">
             <p className="text-eyebrow uppercase text-ink-50 mb-3">Backed by</p>

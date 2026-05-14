@@ -174,11 +174,20 @@ function ProductModule({
   index: number
 }) {
   const isReversed = index % 2 === 1
+  const palettes = ['gradient-lavender', 'gradient-peach', 'gradient-mint'] as const
+  const gradient =
+    index % 2 === 0 ? palettes[Math.floor(index / 2) % palettes.length] : null
 
   return (
     <section
-      className={`section-tight ${index % 2 === 0 ? 'bg-bg' : 'bg-bg-soft/40'} border-t border-line-light`}
+      className={`section-tight ${index % 2 === 0 ? 'bg-bg' : 'bg-bg-soft/40'} border-t border-line-light relative overflow-hidden`}
     >
+      {gradient && (
+        <div
+          className={`absolute inset-0 -z-10 ${gradient} opacity-25`}
+          aria-hidden="true"
+        />
+      )}
       <div className="container-page">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center max-w-[1100px] mx-auto">
           {/* Text */}

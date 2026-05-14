@@ -35,7 +35,8 @@ const industries = [
 
 export function Industries() {
   return (
-    <section className="section">
+    <section className="section relative overflow-hidden">
+      <div className="absolute inset-0 -z-10 gradient-mint opacity-30" aria-hidden="true" />
       <div className="container-page">
         {/* Header */}
         <div className="mx-auto max-w-[680px] text-center mb-14 md:mb-16">

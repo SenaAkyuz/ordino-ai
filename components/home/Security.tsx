@@ -47,7 +47,8 @@ type SecurityItem = (typeof securityItems)[number]
 
 export function Security() {
   return (
-    <section id="security" className="section">
+    <section id="security" className="section relative overflow-hidden">
+      <div className="absolute inset-0 -z-10 gradient-lavender opacity-30" aria-hidden="true" />
       <div className="container-page">
         {/* Header */}
         <div className="mx-auto max-w-[720px] text-center mb-14 md:mb-16">
