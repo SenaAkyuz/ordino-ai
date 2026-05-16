@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { createClient } from '@/utils/supabase/server'
 import { LogoutButton } from './components/LogoutButton'
 import { Sidebar } from './components/Sidebar'
+import { MobileNav } from './components/MobileNav'
 
 export const metadata = {
   title: 'Dashboard',
@@ -35,11 +36,14 @@ export default async function DashboardLayout({
       <div className="relative lg:pl-[72px]">
         <header className="border-b border-line/70 bg-bg/60 backdrop-blur-md sticky top-0 z-40">
           <div className="px-4 md:px-6 lg:px-8 h-14 flex items-center justify-between max-w-[1400px] mx-auto">
-            <Link href="/dashboard" className="lg:hidden flex items-center gap-2.5">
-              <span className="font-display font-bold text-lg text-ink tracking-tight">
-                Ordino
-              </span>
-            </Link>
+            <div className="flex items-center lg:hidden">
+              <MobileNav />
+              <Link href="/dashboard" className="flex items-center gap-2.5">
+                <span className="font-display font-bold text-lg text-ink tracking-tight">
+                  Ordino
+                </span>
+              </Link>
+            </div>
 
             <div className="flex items-center gap-4 ml-auto">
               <div className="hidden md:flex items-center gap-2.5">

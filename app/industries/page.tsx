@@ -97,7 +97,7 @@ export default function IndustriesPage() {
               Built for industries where one lead is worth millions.
             </h1>
             <p className="mt-7 text-body-lg text-ink-50 max-w-[620px] text-pretty">
-              Generic AI tools optimise clicks. Ordino optimises revenue per lead — because in your sector, leads are worth more than most companies' annual revenue.
+              Generic AI tools optimise clicks. Ordino optimises revenue per lead — because in your sector, leads are worth more than most companies&rsquo; annual revenue.
             </p>
           </div>
         </div>
@@ -151,11 +151,11 @@ function IndustrySection({
             </p>
 
             {/* KPI Grid — brief: tahmini rakam, "indicative" küçük */}
-            <div className="grid grid-cols-3 gap-3 mb-2">
+            <div className="grid grid-cols-3 gap-2 sm:gap-3 mb-2">
               {industry.kpis.map((kpi, i) => (
-                <div key={i} className="rounded-lg bg-bg-card border border-line p-4">
+                <div key={i} className="rounded-lg bg-bg-card border border-line p-3 sm:p-4">
                   <div className="text-caption text-ink-50 mb-1.5">{kpi.label}</div>
-                  <div className="font-display font-bold text-h3 text-ink tabular">
+                  <div className="font-display font-bold text-body-lg sm:text-h3 text-ink tabular">
                     {kpi.value}
                   </div>
                 </div>
