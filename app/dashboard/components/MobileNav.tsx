@@ -1,13 +1,19 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useSyncExternalStore } from 'react'
+import { createPortal } from 'react-dom'
 import {
   navItems,
   useSectionNav,
   ReportsIcon,
   SettingsIcon,
 } from './nav-config'
+
+// Hydration-safe client check (no setState-in-effect). The drawer is
+// portaled to <body> so it escapes the dashboard header's backdrop-filter,
+// which would otherwise be the containing block for its `position: fixed`.
+const emptySubscribe = () => () => {}
 
 export function MobileNav() {
   const { pathname, handleNav } = useSectionNav()
@@ -40,6 +46,12 @@ export function MobileNav() {
     }
   }, [open])
 
+  const isClient = useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false,
+  )
+
   const close = () => setOpen(false)
 
   const onReportsActive = pathname?.startsWith('/dashboard/reports')
@@ -60,13 +72,16 @@ export function MobileNav() {
         </svg>
       </button>
 
-      {/* Drawer (overlay + sliding panel) */}
-      <div
-        className={`fixed inset-0 z-[60] lg:hidden ${
-          open ? '' : 'pointer-events-none'
-        }`}
-        aria-hidden={!open}
-      >
+      {/* Drawer — portaled to <body> so the header's backdrop-filter
+          doesn't become its containing block and clip it. */}
+      {isClient &&
+        createPortal(
+          <div
+            className={`fixed inset-0 z-[60] lg:hidden ${
+              open ? '' : 'pointer-events-none'
+            }`}
+            aria-hidden={!open}
+          >
         {/* Scrim */}
         <div
           onClick={close}
@@ -160,7 +175,9 @@ export function MobileNav() {
             </button>
           </div>
         </aside>
-      </div>
+          </div>,
+          document.body,
+        )}
     </>
   )
 }
