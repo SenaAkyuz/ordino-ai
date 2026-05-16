@@ -58,12 +58,6 @@ export function Header() {
 
         {/* Right CTAs */}
         <div className="flex items-center gap-2">
-          <a
-            href="https://app.ordino.ai"
-            className="hidden text-[14px] font-medium text-ink-70 transition-colors hover:text-ink md:block px-3 py-1.5"
-          >
-            Sign in
-          </a>
           <Link href="/contact" className="btn-primary btn-sm">
             Book a Demo
           </Link>
@@ -100,12 +94,6 @@ export function Header() {
                 {item.label}
               </Link>
             ))}
-            <a
-              href="https://app.ordino.ai"
-              className="rounded-md px-3 py-2.5 text-[15px] font-medium text-ink-70 hover:bg-bg-soft hover:text-ink"
-            >
-              Sign in
-            </a>
           </nav>
         </div>
       )}
