@@ -59,7 +59,7 @@ export default function AboutPage() {
                 label="running enterprise media operations"
               />
               <CredentialMetric
-                value="£XM+"
+                value="£30M+"
                 label="in paid media managed across global brands"
               />
               <CredentialMetric
