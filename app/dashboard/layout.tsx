@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
 import { createClient } from '@/utils/supabase/server'
 import { LogoutButton } from './components/LogoutButton'
 import { Sidebar } from './components/Sidebar'
@@ -20,7 +21,12 @@ export default async function DashboardLayout({
     data: { user },
   } = await supabase.auth.getUser()
 
-  const displayName = user?.email || 'Account'
+  // Defense-in-depth: proxy.ts redirect'ine ek olarak layout seviyesinde de koru.
+  if (!user) {
+    redirect('/login')
+  }
+
+  const displayName = user.email || 'Account'
   const initial = displayName.charAt(0).toUpperCase()
 
   return (
