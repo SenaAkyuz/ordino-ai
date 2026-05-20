@@ -1,27 +1,35 @@
-'use client'
+import Link from 'next/link'
 
-import { useState } from 'react'
+type Props = {
+  currentRange: 7 | 30 | 60
+}
 
-const ranges = ['Today', 'Last 24h', 'Last 7 days', 'Last 30 days', 'Last 60 days']
+const OPTIONS = [
+  { days: 7, label: 'Last 7 days' },
+  { days: 30, label: 'Last 30 days' },
+  { days: 60, label: 'Last 60 days' },
+] as const
 
-export function DateRangePills() {
-  const [active, setActive] = useState('Last 30 days')
-
+export function DateRangePills({ currentRange }: Props) {
   return (
-    <div className="flex items-center gap-1.5 flex-wrap">
-      {ranges.map((r) => (
-        <button
-          key={r}
-          onClick={() => setActive(r)}
-          className={`text-caption font-medium px-3 py-1.5 rounded-lg transition-all ${
-            active === r
-              ? 'bg-accent text-accent-ink shadow-soft'
-              : 'text-ink-50 hover:text-ink hover:bg-bg-card/70 border border-transparent hover:border-line'
-          }`}
-        >
-          {r}
-        </button>
-      ))}
+    <div className="inline-flex items-center gap-1 p-1 rounded-full bg-white/60 border border-[#EAEAE5] backdrop-blur-sm">
+      {OPTIONS.map(({ days, label }) => {
+        const isActive = currentRange === days
+        return (
+          <Link
+            key={days}
+            href={`/dashboard?range=${days}`}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+              isActive
+                ? 'bg-[#0D3B2E] text-white shadow-sm'
+                : 'text-[#0A0A0A]/60 hover:text-[#0A0A0A] hover:bg-white/80'
+            }`}
+            scroll={false}
+          >
+            {label}
+          </Link>
+        )
+      })}
     </div>
   )
 }

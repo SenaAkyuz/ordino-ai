@@ -1,7 +1,13 @@
 import { DateRangePills } from './DateRangePills'
 import { GenerateReportButton } from './GenerateReportButton'
 
-export function PageHeader({ userName }: { userName: string }) {
+export function PageHeader({
+  userName,
+  currentRange = 30,
+}: {
+  userName: string
+  currentRange?: 7 | 30 | 60
+}) {
   const firstName = userName.split('@')[0].split('.')[0]
   const displayName = firstName.charAt(0).toUpperCase() + firstName.slice(1)
 
@@ -16,7 +22,7 @@ export function PageHeader({ userName }: { userName: string }) {
             Performans paneli
           </h1>
           <p className="text-body-sm text-ink-50 mt-2">
-            Mock data · Gerçek API bağlantısı bekleniyor
+            GoBritanya · canlı veri
           </p>
         </div>
         <div className="flex items-center gap-2 text-caption text-ink-50 font-medium tabular-nums">
@@ -26,7 +32,7 @@ export function PageHeader({ userName }: { userName: string }) {
       </div>
 
       <div className="flex items-center justify-between gap-4 flex-wrap">
-        <DateRangePills />
+        <DateRangePills currentRange={currentRange} />
         <GenerateReportButton />
       </div>
     </div>

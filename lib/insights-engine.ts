@@ -6,6 +6,7 @@ import {
   instagramKpis,
   linkedinKpis,
 } from './mock-data'
+import { getGoogleAdsCampaigns } from '@/lib/api/google-ads'
 import { generateAIInsights } from '@/lib/ai/claude'
 
 export type Insight = {
@@ -19,35 +20,82 @@ export type Insight = {
 export type Platform = 'google' | 'meta' | 'instagram' | 'linkedin'
 
 // ── Google Ads ──
-function getGoogleAdsInsights(): Insight[] {
-  const sortedByRoas = [...googleAdsCampaigns].sort((a, b) => b.roas - a.roas)
-  const topRoas = sortedByRoas[0]
-  const lowestCtr = [...googleAdsCampaigns].sort((a, b) => a.ctr - b.ctr)[0]
-  const lowestRoas = sortedByRoas[sortedByRoas.length - 1]
+async function getGoogleAdsInsights(rangeDays: 7 | 30 | 60 = 30): Promise<Insight[]> {
+  const campaigns = await getGoogleAdsCampaigns(rangeDays)
+  const insights: Insight[] = []
 
-  return [
-    {
+  if (campaigns.length === 0) {
+    return [
+      {
+        type: 'warning',
+        icon: '⚠️',
+        title: 'Veri yok',
+        description: 'Son 30 günde aktif kampanya bulunamadı.',
+        action: 'Hesabı kontrol et',
+      },
+    ]
+  }
+
+  // ── 1. En yüksek ROAS — bütçe artırma önerisi ──
+  const sortedByRoas = [...campaigns].filter((c) => c.roas > 0).sort((a, b) => b.roas - a.roas)
+  const topRoas = sortedByRoas[0]
+
+  if (topRoas && topRoas.roas >= 3) {
+    insights.push({
       type: 'recommendation',
       icon: '📈',
       title: 'Bütçe artırılması öneriliyor',
-      description: `"${topRoas.name}" kampanyanız ${topRoas.roas.toFixed(1)}x ROAS ile en yüksek performans gösteriyor. Sadece £${topRoas.cost.toLocaleString('en-GB')} harcamayla ${topRoas.conversions} dönüşüm alındı.`,
+      description: `"${topRoas.name}" kampanyanız ${topRoas.roas.toFixed(1)}x ROAS ile en yüksek performans gösteriyor. £${topRoas.cost.toLocaleString('en-GB')} harcamayla ${topRoas.conversions} dönüşüm alındı.`,
       action: 'Bütçeyi %20 artır',
-    },
-    {
+    })
+  }
+
+  // ── 2. Düşük ROAS — uyarı (anlamlı harcaması olanlar) ──
+  const sortedByLowRoas = [...campaigns]
+    .filter((c) => c.cost > 100)
+    .sort((a, b) => a.roas - b.roas)
+  const lowRoas = sortedByLowRoas[0]
+
+  if (lowRoas && lowRoas.roas < 1) {
+    insights.push({
       type: 'warning',
       icon: '⚠️',
       title: 'Düşük performans',
-      description: `"${lowestRoas.name}" ${lowestRoas.roas.toFixed(1)}x ROAS ve %${lowestCtr.ctr.toFixed(2)} CTR ile beklenti altında. Targeting veya creative iyileştirmesi gerekli.`,
+      description: `"${lowRoas.name}" ${lowRoas.roas.toFixed(1)}x ROAS ve %${lowRoas.ctr.toFixed(2)} CTR ile beklenti altında. Targeting veya creative iyileştirmesi gerekli.`,
       action: 'Creative yenile',
-    },
-    {
+    })
+  }
+
+  // ── 3. Top 3 kampanyaların payı — büyüme fırsatı ──
+  const totalConversions = campaigns.reduce((sum, c) => sum + c.conversions, 0)
+  const top3Conversions = sortedByRoas.slice(0, 3).reduce((sum, c) => sum + c.conversions, 0)
+  const top3Share = totalConversions > 0 ? Math.round((top3Conversions / totalConversions) * 100) : 0
+
+  if (top3Share >= 40) {
+    insights.push({
       type: 'opportunity',
       icon: '✨',
       title: 'Büyüme fırsatı',
-      description: `Top 3 kampanyanız toplam dönüşümün %58'ini sağlıyor. Bu kampanyaları ölçeklendirebilirsiniz.`,
+      description: `Top 3 kampanyanız toplam dönüşümün %${top3Share}'ini sağlıyor. Bu kampanyaları ölçeklendirebilirsiniz.`,
       action: 'Lookalike ekle',
-    },
-  ]
+    })
+  }
+
+  // ── Dolgu: 3'ten az insight varsa en yüksek harcamayı ekle ──
+  if (insights.length < 3) {
+    const highestSpend = [...campaigns].sort((a, b) => b.cost - a.cost)[0]
+    if (highestSpend) {
+      insights.push({
+        type: 'opportunity',
+        icon: '💡',
+        title: 'En büyük harcama',
+        description: `"${highestSpend.name}" £${highestSpend.cost.toLocaleString('en-GB')} harcama ile bütçenin büyük kısmını alıyor. ROAS ${highestSpend.roas.toFixed(1)}x.`,
+        action: 'Performans incele',
+      })
+    }
+  }
+
+  return insights.slice(0, 3)
 }
 
 // ── Meta Ads ──
@@ -160,7 +208,10 @@ function getRawDataForPlatform(platform: Platform) {
   }
 }
 
-export async function getInsights(platform: Platform): Promise<Insight[]> {
+export async function getInsights(
+  platform: Platform,
+  rangeDays: 7 | 30 | 60 = 30,
+): Promise<Insight[]> {
   // Try AI first (no-op + null until ANTHROPIC_API_KEY is set)
   const data = getRawDataForPlatform(platform)
   const aiInsights = await generateAIInsights(platform, data)
@@ -172,7 +223,7 @@ export async function getInsights(platform: Platform): Promise<Insight[]> {
   // Fallback to rule-based
   switch (platform) {
     case 'google':
-      return getGoogleAdsInsights()
+      return getGoogleAdsInsights(rangeDays)
     case 'meta':
       return getMetaAdsInsights()
     case 'instagram':

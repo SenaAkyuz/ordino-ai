@@ -6,8 +6,14 @@ const typeStyles: Record<Insight['type'], { bg: string; border: string; text: st
   opportunity: { bg: 'bg-[#EFF8FF]', border: 'border-[#B2DDFF]', text: 'text-[#175CD3]' },
 }
 
-export async function AIInsightsCard({ platform }: { platform: Platform }) {
-  const insights = await getInsights(platform)
+export async function AIInsightsCard({
+  platform,
+  range = 30,
+}: {
+  platform: Platform
+  range?: 7 | 30 | 60
+}) {
+  const insights = await getInsights(platform, range)
 
   return (
     <div className="card p-5 md:p-6 mb-5 bg-gradient-to-br from-accent-soft/40 to-bg-card">

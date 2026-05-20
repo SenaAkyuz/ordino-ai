@@ -28,13 +28,17 @@ export function MetricCard({
         <div className="font-display font-bold text-[26px] text-ink leading-none tabular-nums tracking-tight">
           {value}
         </div>
-        {trend && (
+        {trend ? (
           <div
             className={`text-caption font-semibold tabular-nums ${
               trend.positive ? 'text-success' : 'text-[#B42318]'
             }`}
           >
             {trend.positive ? '↗' : '↘'} {trend.value}
+          </div>
+        ) : (
+          <div className="text-caption font-semibold tabular-nums text-ink-30">
+            —
           </div>
         )}
       </div>

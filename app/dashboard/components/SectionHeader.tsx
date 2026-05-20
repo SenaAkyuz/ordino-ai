@@ -1,5 +1,3 @@
-import { ConnectionBadge } from './ConnectionBadge'
-
 type Platform = 'google' | 'meta' | 'instagram' | 'linkedin'
 
 const platformLinks: Record<Platform, { name: string; url: string }> = {
@@ -25,7 +23,6 @@ export function SectionHeader({
         <h2 className="font-display font-bold text-h3 md:text-2xl text-ink tracking-tight">
           {title}
         </h2>
-        <ConnectionBadge />
       </div>
       <a
         href={link.url}

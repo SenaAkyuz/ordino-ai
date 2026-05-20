@@ -42,9 +42,6 @@ export function TrendChart({
     <div className="card p-5 md:p-6">
       <div className="flex items-baseline justify-between mb-5">
         <h3 className="font-display text-h4 font-semibold text-ink">{label}</h3>
-        <div className="text-caption text-ink-50 tabular-nums">
-          Son 30 gün
-        </div>
       </div>
 
       <div className="relative" style={{ height }}>
